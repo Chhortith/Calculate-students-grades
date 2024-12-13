@@ -13,11 +13,36 @@ student_data = [
 midterm = [[10],[9],[5],[10],[10],[10],[7]]
 final_score = [[60],[55],[49],[70],[66],[59],[70]]
 
-#คิดเกรด A = 80, B+=75, B=70, C+=65, C=60, D+=55, D=50, E <=49
-for student in student_data:
-    print(f"รหัส: {student[0]}, ชื่อนามสกุล: {student[1]}")
-
 student_np = np.array(student_data)
+student_np = np.append(student_np, midterm, axis=1)
+student_np = np.append(student_np, final_score, axis=1)
 
-student_np = np.append(student_np, midterm, axis = 1)
-print(student_np)
+grades = []
+for row in student_np:
+    midterm_score = int(row[2])
+    final_score = int(row[3])
+    total_score = midterm_score + final_score
+    if total_score >= 80:
+        grade = 'A'
+    elif total_score >= 75:
+        grade = 'B+'
+    elif total_score >= 70:
+        grade = 'B'
+    elif total_score >= 65:
+        grade = 'C+'
+    elif total_score >= 60:
+        grade = 'C'
+    elif total_score >= 55:
+        grade = 'D+'
+    elif total_score >= 50:
+        grade = 'D'
+    else:
+        grade = 'E'
+    grades.append(grade)
+
+student_np = np.append(student_np, np.array(grades).reshape(-1,1), axis=1)
+
+
+print("รหัส\tชื่อ-สกุล\tMidterm\tFinal\tGrade")
+for row in student_np:
+    print(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}\t{row[4]}")
